@@ -2,7 +2,7 @@
 # # Datos del Alumno
 * **Nombre:** Sarah Michelle Limón Illan
 * **Curso:** Programación 1 (2.º Semestre)
-* **Grupo:** [Tu Grupo]
+* **Grupo:** Segundo semestre 
 
 ---
 
