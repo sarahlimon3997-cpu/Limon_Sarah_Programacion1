@@ -3,14 +3,14 @@
 # ==========================================
 
 # Ejercicio 1: Datos personales
-nombre, edad, ciudad = "Sarah", 18, "Guadalajara"
-print(nombre, edad, ciudad)
+nombre, edad, ciudad = "Sarah", 19, "Guadalajara"
+print(Sarah Michelle Limon Illan, 19, Guadalajara Jalisco)
 
 # Ejercicio 2: Actualizar un contador
 contador = 0
-contador += 1; print(contador)
-contador += 1; print(contador)
-contador += 1; print(contador)
+contador += 1; print(contador A)
+contador += 1; print(contador B)
+contador += 1; print(contador C)
 
 # Ejercicio 3: Constante de conversión
 PULGADAS_A_CM = 2.54
