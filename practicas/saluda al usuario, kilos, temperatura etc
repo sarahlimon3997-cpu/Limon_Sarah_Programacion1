@@ -1,0 +1,105 @@
+def Saluda():
+    print("Hola ¿Que tal?")
+
+Saluda()
+edad = int(input("Escribe tu edad: "))
+
+if edad < 13:
+    print("niño")
+elif edad <= 17:
+    print("adolescente")
+else:
+    print("adulto")
+
+usuario_correcto = "admin"
+contrasena_correcta = "1234"
+
+print("acceso concedido")
+nombre = input("¿Cómo te quieres llamar? ")
+contrasena = input("Escribe la contraseña: ")
+
+if contrasena == "1234":
+    print(f"Acceso concedido ¡Hola {nombre}!")
+else:
+    print("Um, parece ser que este no es tu dispositivo, intenta otra vez.")
+
+peso = float(input("Escribe el peso del paquete en kilogramos: "))
+
+if peso <= 1:
+    costo = 50
+elif peso <= 5:
+    costo = 90
+else:
+    costo = 150
+
+if peso > 10:
+    costo *= 0.9
+print(f"El costo de envío es ${costo:.2f}.")
+
+temperatura = float(input("Escribe la temperatura en grados: "))
+
+if temperatura < 10:
+    print("La temperatura es fría.")
+elif temperatura <= 24:
+    print("La temperatura es templada.")
+else:
+    print("La temperatura es calurosa.")
+
+calificacion = float(input("Escribe una calificación de 0 a 100: "))
+
+if calificacion >= 90:
+    letra = "A"
+elif calificacion >= 80:
+    letra = "B"
+elif calificacion >= 70:
+    letra = "C"
+elif calificacion >= 60:
+    letra = "D"
+else:
+    letra = "F"
+
+print(f"La calificación corresponde a {letra}.")
+
+monto = float(input("Escribe el monto de la compra: $"))
+
+if 1 <= numero <= 100:
+    print("El número está en el rango.")
+else:
+    print("El número no está en el rango.")
+
+peso_persona = float(input("Escribe tu peso en kilogramos: "))
+estatura = float(input("Escribe tu estatura en metros: "))
+imc = peso_persona / estatura ** 2
+
+if imc < 18.5:
+    categoria_imc = "bajo peso"
+elif imc < 25:
+    categoria_imc = "normal"
+elif imc < 30:
+    categoria_imc = "sobrepeso"
+else:
+    categoria_imc = "obesidad"
+
+print(f"Tu IMC es {imc:.2f}: {categoria_imc}.")
+
+consumo = float(input("Escribe el consumo mensual en kWh: "))
+
+if consumo <= 150:
+    costo_electricidad = consumo * 1.20
+elif consumo <= 300:
+    costo_electricidad = 150 * 1.20 + (consumo - 150) * 1.80
+else:
+    costo_electricidad = 150 * 1.20 + 150 * 1.80 + (consumo - 300) * 2.50
+
+print(f"Consumo: {consumo:g} kWh. Costo total: ${costo_electricidad:.1f}.")
+if monto > 500:
+    porcentaje_descuento = 20
+elif monto > 200:
+    porcentaje_descuento = 10
+else:
+    porcentaje_descuento = 0
+
+monto_final = monto * (1 - porcentaje_descuento / 100)
+print(f"Descuento: {porcentaje_descuento}%. Monto final a pagar: ${monto_final:.2f}.")
+
+numero = float(input("Escribe un número para validar si está entre 1 y 100: "))
