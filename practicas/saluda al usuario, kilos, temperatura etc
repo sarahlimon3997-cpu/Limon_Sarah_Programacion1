@@ -1,7 +1,9 @@
+
 def Saluda():
     print("Hola ¿Que tal?")
 
 Saluda()
+
 edad = int(input("Escribe tu edad: "))
 
 if edad < 13:
@@ -11,18 +13,16 @@ elif edad <= 17:
 else:
     print("adulto")
 
-usuario_correcto = "admin"
-contrasena_correcta = "1234"
-
-print("acceso concedido")
 nombre = input("¿Cómo te quieres llamar? ")
 contrasena = input("Escribe la contraseña: ")
+contrasena_correcta = "1234"
 
-if contrasena == "1234":
-    print(f"Acceso concedido ¡Hola {nombre}!")
+if contrasena == contrasena_correcta:
+    print(f"Acceso concedido. ¡Hola {nombre}!")
 else:
-    print("Um, parece ser que este no es tu dispositivo, intenta otra vez.")
+    print("Contraseña incorrecta.")
 
+# Ejercicio 1: Calculadora de envío
 peso = float(input("Escribe el peso del paquete en kilogramos: "))
 
 if peso <= 1:
@@ -34,8 +34,10 @@ else:
 
 if peso > 10:
     costo *= 0.9
+
 print(f"El costo de envío es ${costo:.2f}.")
 
+# Ejercicio 2: Clasificar la temperatura
 temperatura = float(input("Escribe la temperatura en grados: "))
 
 if temperatura < 10:
@@ -45,6 +47,7 @@ elif temperatura <= 24:
 else:
     print("La temperatura es calurosa.")
 
+# Ejercicio 3: Calificación con letras
 calificacion = float(input("Escribe una calificación de 0 a 100: "))
 
 if calificacion >= 90:
@@ -60,13 +63,28 @@ else:
 
 print(f"La calificación corresponde a {letra}.")
 
+# Ejercicio 4: Descuento por monto de compra
 monto = float(input("Escribe el monto de la compra: $"))
+
+if monto > 500:
+    porcentaje_descuento = 20
+elif monto > 200:
+    porcentaje_descuento = 10
+else:
+    porcentaje_descuento = 0
+
+monto_final = monto * (1 - porcentaje_descuento / 100)
+print(f"Descuento: {porcentaje_descuento}%. Monto final a pagar: ${monto_final:.2f}.")
+
+# Ejercicio 5: Validar un rango
+numero = float(input("Escribe un número para validar si está entre 1 y 100: "))
 
 if 1 <= numero <= 100:
     print("El número está en el rango.")
 else:
     print("El número no está en el rango.")
 
+# Ejercicio 6: Clasificar el IMC
 peso_persona = float(input("Escribe tu peso en kilogramos: "))
 estatura = float(input("Escribe tu estatura en metros: "))
 imc = peso_persona / estatura ** 2
@@ -82,6 +100,7 @@ else:
 
 print(f"Tu IMC es {imc:.2f}: {categoria_imc}.")
 
+# Ejercicio 7: Tarifas de electricidad
 consumo = float(input("Escribe el consumo mensual en kWh: "))
 
 if consumo <= 150:
@@ -92,14 +111,3 @@ else:
     costo_electricidad = 150 * 1.20 + 150 * 1.80 + (consumo - 300) * 2.50
 
 print(f"Consumo: {consumo:g} kWh. Costo total: ${costo_electricidad:.1f}.")
-if monto > 500:
-    porcentaje_descuento = 20
-elif monto > 200:
-    porcentaje_descuento = 10
-else:
-    porcentaje_descuento = 0
-
-monto_final = monto * (1 - porcentaje_descuento / 100)
-print(f"Descuento: {porcentaje_descuento}%. Monto final a pagar: ${monto_final:.2f}.")
-
-numero = float(input("Escribe un número para validar si está entre 1 y 100: "))
