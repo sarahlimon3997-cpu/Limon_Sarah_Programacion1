@@ -1,0 +1,76 @@
+# Ejercicio 1
+edad = int(input("Ingresa tu edad: "))
+
+if edad < 13:
+    print("niño")
+elif edad <= 17:
+    print("adolescente")
+else:
+    print("adulto")
+
+
+# Ejercicio 2
+usuario_correcto = "alumno"
+contrasena_correcta = "pastel123"
+
+usuario_ingresado = input("Usuario: ")
+contrasena_ingresada = input("Contraseña: ")
+
+if usuario_ingresado == usuario_correcto and contrasena_ingresada == contrasena_correcta:
+    print("acceso concedido")
+elif usuario_ingresado == usuario_correcto:
+    print("contraseña incorrecta")
+else:
+    print("usuario no encontrado")
+# Ejercicio 3
+peso = float(input("Ingresa el peso del paquete en kg: "))
+
+if peso <= 1:
+    costo = 50
+elif peso <= 5:
+    costo = 90
+else:
+    costo = 150
+
+if peso > 10:
+    costo = costo * 0.90
+
+print(f"El costo de envío es: ${costo:.2f}")
+# Ejercicio 4: Clasificar la temperatura
+temperatura = float(input("Ingresa la temperatura: "))
+
+if temperatura < 10:
+    print("frío")
+elif temperatura < 25:
+    print("templado")
+else:
+    print("calor")
+
+
+# Ejercicio 5: Calificación con letras
+calificacion = int(input("Ingresa una calificación de 0 a 100: "))
+
+if calificacion >= 90:
+    print("A")
+elif calificacion >= 80:
+    print("B")
+elif calificacion >= 70:
+    print("C")
+elif calificacion >= 60:
+    print("D")
+else:
+    print("F")
+
+
+# Ejercicio 6: Descuento por monto de compra
+monto = float(input("Ingresa el monto de la compra: $"))
+
+if monto > 500:
+    descuento = 0.20
+elif monto > 200:
+    descuento = 0.10
+else:
+    descuento = 0
+
+total_descuento = monto * descuento
+print(f"El descuento es de: ${total_descuento:.2f}")
