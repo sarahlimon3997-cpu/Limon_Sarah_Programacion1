@@ -1,1 +1,1428 @@
-view-source:file:///C:/Users/neowa/Downloads/Gato%20web/index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gato Gatete</title>
+  <link rel="icon" href="icon.jpg" />
+  <style>
+    @font-face {
+      font-family: 'ButtonsPatches';
+      src: url('fuente.ttf');
+    }
+
+    :root {
+      --rosa-1: #FFA2B9;
+      --rosa-2: #FFB2C5;
+      --rosa-3: #FFC2D1;
+      --rosa-4: #FDD5DF;
+      --rosa-5: #FAE8ED;
+      --texto: #5A2A3A;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'ButtonsPatches', sans-serif;
+      color: var(--texto);
+      background: var(--rosa-5) url("corazones.gif") repeat;
+      padding: 24px 20px 110px;
+    }
+
+    .contenedor {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      padding-top: 170px;
+    }
+
+    .tarjeta {
+      background: rgba(250, 232, 237, 0.94);
+      border: 3px solid var(--rosa-1);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(255, 162, 185, 0.35);
+    }
+
+    h1, h2 {
+      margin: 0 0 12px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .subtitulo {
+      margin: 0 0 12px;
+      text-align: center;
+    }
+
+    .controles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    button, select {
+      font-family: 'ButtonsPatches', sans-serif;
+      background: var(--rosa-3);
+      color: var(--texto);
+      border: 2px solid var(--rosa-1);
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--rosa-2);
+    }
+
+    .marcador {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .estado {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .reproductor-barra {
+      margin: 12px 0 14px;
+    }
+
+    .pista-rastro {
+      position: relative;
+      height: 10px;
+      background: var(--rosa-4);
+      border: 2px solid var(--rosa-1);
+      border-radius: 999px;
+      cursor: pointer;
+      margin: 14px 0 8px;
+    }
+
+    .pista-relleno {
+      height: 100%;
+      width: 0%;
+      background: var(--rosa-2);
+      border-radius: 999px;
+    }
+
+    .corazon-avance {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -52%);
+      width: 22px;
+      height: 20px;
+      pointer-events: none;
+      transition: left 0.08s linear;
+    }
+
+    .corazon-avance svg {
+      width: 100%;
+      height: 100%;
+      fill: #FFA2B9;
+      stroke: #5A2A3A;
+      stroke-width: 1.5;
+      display: block;
+    }
+
+    .tiempos-pista {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .controles-player {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .panel-playlist {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 30;
+      background: rgba(250, 232, 237, 0.96);
+      border: 3px solid var(--rosa-1);
+      border-radius: 20px;
+      padding: 8px 10px;
+      box-shadow: 0 8px 20px rgba(255, 162, 185, 0.35);
+      width: 300px;
+      max-width: calc(100vw - 32px);
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+
+    .panel-playlist h2 {
+      font-size: 13.5px;
+      margin: 0 0 6px;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .panel-playlist .reproductor-barra {
+      margin: 4px 0 6px;
+    }
+
+    .panel-playlist .pista-rastro {
+      height: 8px;
+      margin: 8px 0 4px;
+    }
+
+    .panel-playlist .corazon-avance {
+      width: 18px;
+      height: 16px;
+    }
+
+    .panel-playlist .controles-player {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .panel-playlist .controles-player button {
+      padding: 3px 8px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    .panel-playlist .tiempos-pista {
+      font-size: 11px;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .panel-playlist .lista-canciones {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      overflow-x: auto;
+      margin-top: 6px;
+      padding-bottom: 2px;
+    }
+
+    .panel-playlist .item-cancion {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: 92px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      background: var(--rosa-4);
+      padding: 4px 7px;
+      font-size: 11px;
+      border-radius: 10px;
+    }
+
+    .panel-playlist .item-cancion.activa,
+    #btn-loop-playlist.activa {
+      background: var(--rosa-1);
+    }
+
+    .tablero-gato {
+      display: grid;
+      grid-template-columns: repeat(3, 88px);
+      gap: 10px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .celda-gato {
+      width: 88px;
+      height: 88px;
+      background: var(--rosa-4);
+      border: 2px solid var(--rosa-1);
+      border-radius: 18px;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tablero-4 {
+      display: grid;
+      grid-template-columns: repeat(7, 52px);
+      gap: 8px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .celda-4 {
+      width: 52px;
+      height: 52px;
+      background: var(--rosa-4);
+      border: 2px solid var(--rosa-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .celda-4 img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .burbujas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .burbuja {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, var(--rosa-3) 65%, var(--rosa-1));
+      border: 2px solid var(--rosa-1);
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .seccion-slime {
+      max-width: 780px;
+      margin: 24px auto;
+      text-align: center;
+    }
+
+    .seccion-slime h2 {
+      margin: 0 0 18px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .seccion-slime > h2:nth-of-type(2) {
+      margin-top: 24px;
+    }
+
+    .fila-slime {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .item-slime {
+      display: block;
+      width: 280px;
+      max-width: 100%;
+      aspect-ratio: 1;
+      height: auto;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 3px solid var(--rosa-1);
+      background: var(--rosa-4);
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .item-slime.video-slime {
+      margin: 0;
+    }
+
+    .burbuja.explotada {
+      opacity: 0.25;
+      transform: scale(0.85);
+    }
+
+    .dato-caja {
+      text-align: center;
+      background: var(--rosa-4);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+
+    .cierre-final {
+      max-width: 960px;
+      margin: 36px auto 24px;
+      padding: 8px 16px;
+      text-align: center;
+    }
+
+    .cierre-final img {
+      display: block;
+      margin: 0 auto 10px;
+      max-width: 140px;
+      height: auto;
+    }
+
+    .cierre-final p {
+      margin: 0;
+      font-size: 16px;
+      color: var(--texto);
+    }
+
+    @media (max-width: 500px) {
+      .tablero-4 {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 4px;
+        width: 100%;
+      }
+
+      .celda-4 {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .celda-4 img {
+        width: 80%;
+        height: 80%;
+      }
+    }
+
+    .gato-esquina {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 86px;
+      height: auto;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .gato-blanco-esquina {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      width: 100px;
+      height: auto;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .gata-esquina {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 86px;
+      height: auto;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    @media (max-width: 500px) {
+      .panel-playlist {
+        width: calc(100vw - 100px);
+        max-width: calc(100vw - 100px);
+      }
+
+      .gata-esquina {
+        top: 20px;
+        left: 12px;
+        width: 56px;
+      }
+
+      .gato-blanco-esquina {
+        left: 12px;
+        bottom: 12px;
+        width: 64px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <section class="tarjeta">
+      <h1>Gato Gatete</h1>
+      <p class="subtitulo">Rinconsito gatuno para dejar por un momento el scroll :3</p>
+      <div class="controles">
+        <label>
+          Dificultad:
+          <select id="dificultad">
+            <option value="facil">cachorros</option>
+            <option value="medio">gato</option>
+            <option value="imposible">gatote</option>
+          </select>
+        </label>
+        <button id="btn-reiniciar-todo">Reiniciar marcadores</button>
+      </div>
+    </section>
+
+    <aside class="panel-playlist">
+      <h2 id="titulo-cancion-actual">Le ciel ~ Kuuhaku no Kanata e ~/MALICE MIZER [Music Box]</h2>
+
+      <div class="controles-player">
+        <button id="btn-prev-pista" title="Cancion anterior">|&lt;</button>
+        <button id="btn-play-pausa" title="Reproducir o pausar">&gt;</button>
+        <button id="btn-sig-pista" title="Siguiente cancion">&gt;|</button>
+        <button id="btn-loop-playlist" class="activa" title="Repetir playlist en loop">Loop</button>
+      </div>
+
+      <div class="reproductor-barra">
+        <div class="pista-rastro" id="barra-progreso" title="Adelantar o retroceder">
+          <div class="pista-relleno" id="relleno-progreso"></div>
+          <div class="corazon-avance" id="corazon-progreso" aria-hidden="true">
+            <svg viewBox="0 0 24 22">
+              <path d="M12 20.5C12 20.5 2.5 14.2 2.5 7.4C2.5 4.4 4.8 2.2 7.6 2.2C9.4 2.2 11 3.1 12 4.5C13 3.1 14.6 2.2 16.4 2.2C19.2 2.2 21.5 4.4 21.5 7.4C21.5 14.2 12 20.5 12 20.5Z" />
+            </svg>
+          </div>
+        </div>
+        <div class="tiempos-pista">
+          <span id="tiempo-actual">0:00</span>
+          <span id="tiempo-total">0:00</span>
+        </div>
+      </div>
+
+      <div class="lista-canciones" id="lista-canciones"></div>
+    </aside>
+
+    <section class="tarjeta">
+      <h2>Gato (Tic-Tac-Toe)</h2>
+      <div class="marcador">
+        <span>Jugador (X): <strong id="score-gato-tu">0</strong></span>
+        <span>Empates: <strong id="score-gato-empate">0</strong></span>
+        <span>Gato PC (O): <strong id="score-gato-pc">0</strong></span>
+      </div>
+      <div class="estado" id="estado-gato">Turno del jugador (X)</div>
+      <div class="tablero-gato" id="tablero-gato"></div>
+      <div class="controles" style="margin-top: 14px;">
+        <button id="btn-nueva-gato">Nueva partida de Gato</button>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h2>Linea de 4</h2>
+      <div class="marcador">
+        <span>Jugador (1): <strong id="score-4-tu">0</strong></span>
+        <span>Empates: <strong id="score-4-empate">0</strong></span>
+        <span>Gato PC (2): <strong id="score-4-pc">0</strong></span>
+      </div>
+      <div class="estado" id="estado-4">Turno del jugador (1)</div>
+      <div class="tablero-4" id="tablero-4"></div>
+      <div class="controles" style="margin-top: 14px;">
+        <button id="btn-nueva-4">Nueva partida de Linea de 4</button>
+      </div>
+    </section>
+
+    <section class="tarjeta seccion-slime">
+      <h2>Slime</h2>
+      <div class="fila-slime">
+        <img src="videoslime.gif" alt="Animacion de slime" title="Pasa el cursor para reproducir" class="item-slime video-slime" />
+        <img src="videoslime2.gif" alt="Animacion de slime 2" title="Pasa el cursor para reproducir" class="item-slime video-slime" />
+      </div>
+      <h2>Burbujas</h2>
+      <div class="burbujas" id="burbujas"></div>
+      <div class="controles" style="margin-top: 14px;">
+        <button id="btn-inflar">Inflar burbujas</button>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h2>Datos curiosos de gatos</h2>
+      <div class="dato-caja" id="dato-gato"></div>
+      <div class="controles">
+        <button id="btn-dato">Otro dato gatuno</button>
+      </div>
+    </section>
+
+    <footer class="cierre-final">
+      <img src="moñofinal.gif" alt="Mono final" />
+      <p>hecho por Sarah Lim0n</p>
+    </footer>
+  </div>
+
+  <img src="gato.gif" alt="Gatito rodando" class="gato-esquina" />
+  <img src="gatoblanco.gif" alt="Gato blanco" class="gato-blanco-esquina" />
+  <img src="niñagato.gif" alt="Gatita decorativa" class="gata-esquina" />
+
+  <script>
+    const dificultadEl = document.getElementById("dificultad");
+
+    // --- GATO ---
+    const tableroGatoEl = document.getElementById("tablero-gato");
+    const estadoGatoEl = document.getElementById("estado-gato");
+    let tableroGato = Array(9).fill("");
+    let turnoGato = "TU";
+    let finGato = false;
+    let scoreGato = { tu: 0, pc: 0, empate: 0 };
+
+    const lineasGato = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    function revisarGanadorGato(board) {
+      for (const [a, b, c] of lineasGato) {
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return board[a];
+        }
+      }
+      if (!board.includes("")) return "EMPATE";
+      return null;
+    }
+
+    function minimaxGato(board, esTurnoPc) {
+      const res = revisarGanadorGato(board);
+      if (res === "PC") return 10;
+      if (res === "TU") return -10;
+      if (res === "EMPATE") return 0;
+
+      if (esTurnoPc) {
+        let mejor = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (!board[i]) {
+            board[i] = "PC";
+            mejor = Math.max(mejor, minimaxGato(board, false));
+            board[i] = "";
+          }
+        }
+        return mejor;
+      } else {
+        let peor = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (!board[i]) {
+            board[i] = "TU";
+            peor = Math.min(peor, minimaxGato(board, true));
+            board[i] = "";
+          }
+        }
+        return peor;
+      }
+    }
+
+    function movimientoPcGato() {
+      if (finGato) return;
+      const libres = tableroGato.map((v, i) => v === "" ? i : -1).filter(i => i !== -1);
+      if (!libres.length) return;
+
+      let elegido;
+      if (dificultadEl.value === "facil") {
+        elegido = libres[Math.floor(Math.random() * libres.length)];
+      } else if (dificultadEl.value === "medio") {
+        elegido = libres.find(idx => {
+          tableroGato[idx] = "PC";
+          const gana = revisarGanadorGato(tableroGato) === "PC";
+          tableroGato[idx] = "";
+          return gana;
+        });
+        if (elegido === undefined) {
+          const amenaza = libres.find(idx => {
+            tableroGato[idx] = "TU";
+            const gana = revisarGanadorGato(tableroGato) === "TU";
+            tableroGato[idx] = "";
+            return gana;
+          });
+          elegido = amenaza !== undefined && Math.random() < 0.8
+            ? amenaza
+            : libres[Math.floor(Math.random() * libres.length)];
+        }
+      } else {
+        let mejorPuntaje = -Infinity;
+        elegido = libres[0];
+        for (const idx of libres) {
+          tableroGato[idx] = "PC";
+          const puntaje = minimaxGato(tableroGato, false);
+          tableroGato[idx] = "";
+          if (puntaje > mejorPuntaje) {
+            mejorPuntaje = puntaje;
+            elegido = idx;
+          }
+        }
+      }
+
+      tableroGato[elegido] = "PC";
+      renderGato();
+      const ganador = revisarGanadorGato(tableroGato);
+      if (ganador) {
+        terminarGato(ganador);
+      } else {
+        turnoGato = "TU";
+        estadoGatoEl.textContent = "Turno del jugador (X)";
+      }
+    }
+
+    function terminarGato(ganador) {
+      finGato = true;
+      if (ganador === "TU") {
+        scoreGato.tu++;
+        estadoGatoEl.textContent = "Ganaste!";
+        sonarConfeti();
+      } else if (ganador === "PC") {
+        scoreGato.pc++;
+        estadoGatoEl.textContent = "Gano Gato PC";
+        sonarOwTriste();
+      } else {
+        scoreGato.empate++;
+        estadoGatoEl.textContent = "Empate!";
+        sonarMaullido();
+      }
+      actualizarMarcadores();
+    }
+
+    function renderGato() {
+      tableroGatoEl.innerHTML = "";
+      tableroGato.forEach((val, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "celda-gato";
+        btn.textContent = val === "TU" ? "X" : val === "PC" ? "O" : "";
+        btn.onclick = () => {
+          if (finGato || turnoGato !== "TU" || tableroGato[idx]) return;
+          tableroGato[idx] = "TU";
+          sonarPop();
+          renderGato();
+          const ganador = revisarGanadorGato(tableroGato);
+          if (ganador) {
+            terminarGato(ganador);
+            return;
+          }
+          turnoGato = "PC";
+          estadoGatoEl.textContent = "Gato PC pensando...";
+          setTimeout(movimientoPcGato, 280);
+        };
+        tableroGatoEl.appendChild(btn);
+      });
+    }
+
+    function nuevaGato() {
+      tableroGato = Array(9).fill("");
+      turnoGato = "TU";
+      finGato = false;
+      estadoGatoEl.textContent = "Turno del jugador (X)";
+      renderGato();
+    }
+
+    // --- LINEA DE 4 ---
+    const FILAS = 6;
+    const COLS = 7;
+    const tablero4El = document.getElementById("tablero-4");
+    const estado4El = document.getElementById("estado-4");
+    let grid4 = Array.from({ length: FILAS }, () => Array(COLS).fill(""));
+    let turno4 = "TU";
+    let fin4 = false;
+    let score4 = { tu: 0, pc: 0, empate: 0 };
+
+    function filaDisponible(board, col) {
+      for (let r = FILAS - 1; r >= 0; r--) {
+        if (!board[r][col]) return r;
+      }
+      return -1;
+    }
+
+    function revisarGanador4(board) {
+      const dirs = [[0, 1], [1, 0], [1, 1], [1, -1]];
+      for (let r = 0; r < FILAS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const jugador = board[r][c];
+          if (!jugador) continue;
+          for (const [dr, dc] of dirs) {
+            let count = 1;
+            for (let k = 1; k < 4; k++) {
+              const nr = r + dr * k;
+              const nc = c + dc * k;
+              if (nr < 0 || nr >= FILAS || nc < 0 || nc >= COLS || board[nr][nc] !== jugador) break;
+              count++;
+            }
+            if (count === 4) return jugador;
+          }
+        }
+      }
+      if (board.every(fila => fila.every(celda => celda !== ""))) return "EMPATE";
+      return null;
+    }
+
+    function evaluarVentana(ventana) {
+      const pc = ventana.filter(v => v === "PC").length;
+      const tu = ventana.filter(v => v === "TU").length;
+      if (pc === 4) return 1000;
+      if (tu === 4) return -1000;
+      if (pc === 3 && tu === 0) return 12;
+      if (pc === 2 && tu === 0) return 3;
+      if (tu === 3 && pc === 0) return -15;
+      return 0;
+    }
+
+    function puntuarTablero4(board) {
+      let score = 0;
+      const centro = Math.floor(COLS / 2);
+      for (let r = 0; r < FILAS; r++) {
+        if (board[r][centro] === "PC") score += 6;
+      }
+      for (let r = 0; r < FILAS; r++) {
+        for (let c = 0; c <= COLS - 4; c++) {
+          score += evaluarVentana([board[r][c], board[r][c+1], board[r][c+2], board[r][c+3]]);
+        }
+      }
+      for (let c = 0; c < COLS; c++) {
+        for (let r = 0; r <= FILAS - 4; r++) {
+          score += evaluarVentana([board[r][c], board[r+1][c], board[r+2][c], board[r+3][c]]);
+        }
+      }
+      for (let r = 0; r <= FILAS - 4; r++) {
+        for (let c = 0; c <= COLS - 4; c++) {
+          score += evaluarVentana([board[r][c], board[r+1][c+1], board[r+2][c+2], board[r+3][c+3]]);
+        }
+      }
+      for (let r = 3; r < FILAS; r++) {
+        for (let c = 0; c <= COLS - 4; c++) {
+          score += evaluarVentana([board[r][c], board[r-1][c+1], board[r-2][c+2], board[r-3][c+3]]);
+        }
+      }
+      return score;
+    }
+
+    function minimax4(board, profundidad, esPc) {
+      const ganador = revisarGanador4(board);
+      if (ganador === "PC") return 100000 + profundidad;
+      if (ganador === "TU") return -100000 - profundidad;
+      if (ganador === "EMPATE" || profundidad === 0) return puntuarTablero4(board);
+
+      const colsValidas = [];
+      for (let c = 0; c < COLS; c++) {
+        if (filaDisponible(board, c) !== -1) colsValidas.push(c);
+      }
+
+      if (esPc) {
+        let val = -Infinity;
+        for (const c of colsValidas) {
+          const r = filaDisponible(board, c);
+          board[r][c] = "PC";
+          val = Math.max(val, minimax4(board, profundidad - 1, false));
+          board[r][c] = "";
+        }
+        return val;
+      } else {
+        let val = Infinity;
+        for (const c of colsValidas) {
+          const r = filaDisponible(board, c);
+          board[r][c] = "TU";
+          val = Math.min(val, minimax4(board, profundidad - 1, true));
+          board[r][c] = "";
+        }
+        return val;
+      }
+    }
+
+    function movimientoPc4() {
+      if (fin4) return;
+      const validas = [];
+      for (let c = 0; c < COLS; c++) {
+        if (filaDisponible(grid4, c) !== -1) validas.push(c);
+      }
+      if (!validas.length) return;
+
+      let colElegida;
+      if (dificultadEl.value === "facil") {
+        colElegida = validas[Math.floor(Math.random() * validas.length)];
+      } else {
+        let mejorVal = -Infinity;
+        colElegida = validas[0];
+        const profundidad = dificultadEl.value === "medio" ? 1 : 4;
+        for (const c of validas) {
+          const r = filaDisponible(grid4, c);
+          grid4[r][c] = "PC";
+          const val = minimax4(grid4, profundidad, false);
+          grid4[r][c] = "";
+          if (val > mejorVal) {
+            mejorVal = val;
+            colElegida = c;
+          }
+        }
+      }
+
+      const fila = filaDisponible(grid4, colElegida);
+      grid4[fila][colElegida] = "PC";
+      render4();
+      const ganador = revisarGanador4(grid4);
+      if (ganador) {
+        terminar4(ganador);
+      } else {
+        turno4 = "TU";
+        estado4El.textContent = "Turno del jugador (1)";
+      }
+    }
+
+    function terminar4(ganador) {
+      fin4 = true;
+      if (ganador === "TU") {
+        score4.tu++;
+        estado4El.textContent = "Ganaste en Linea de 4!";
+        sonarConfeti();
+      } else if (ganador === "PC") {
+        score4.pc++;
+        estado4El.textContent = "Gano Gato PC";
+        sonarOwTriste();
+      } else {
+        score4.empate++;
+        estado4El.textContent = "Empate!";
+        sonarMaullido();
+      }
+      actualizarMarcadores();
+    }
+
+    function render4() {
+      tablero4El.innerHTML = "";
+      for (let r = 0; r < FILAS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const celda = document.createElement("button");
+          celda.className = "celda-4";
+          const v = grid4[r][c];
+          if (v === "TU") {
+            celda.innerHTML = '<img src="ficha-tu.gif" alt="Ficha jugador" />';
+          } else if (v === "PC") {
+            celda.innerHTML = '<img src="ficha-pc.gif" alt="Ficha de Gato PC" />';
+          }
+          celda.onclick = () => {
+            if (fin4 || turno4 !== "TU") return;
+            const fila = filaDisponible(grid4, c);
+            if (fila === -1) return;
+            grid4[fila][c] = "TU";
+            sonarLinea4();
+            render4();
+            const ganador = revisarGanador4(grid4);
+            if (ganador) {
+              terminar4(ganador);
+              return;
+            }
+            turno4 = "PC";
+            estado4El.textContent = "Gato PC pensando...";
+            setTimeout(movimientoPc4, 280);
+          };
+          tablero4El.appendChild(celda);
+        }
+      }
+    }
+
+    function nueva4() {
+      grid4 = Array.from({ length: FILAS }, () => Array(COLS).fill(""));
+      turno4 = "TU";
+      fin4 = false;
+      estado4El.textContent = "Turno del jugador (1)";
+      render4();
+    }
+
+    // --- BURBUJAS ---
+    const burbujasEl = document.getElementById("burbujas");
+    const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+    const videosSlimeEls = Array.from(document.querySelectorAll(".video-slime"));
+    const fuentesGifSlime = new Map(videosSlimeEls.map(video => [video, video.getAttribute("src")]));
+    const salidaSonidoSlime = ctxAudio.createGain();
+    salidaSonidoSlime.gain.value = 0;
+    salidaSonidoSlime.connect(ctxAudio.destination);
+    const audioCrunchySlime = new Audio("sonidocrunchy.mp3");
+    audioCrunchySlime.loop = true;
+    let videoSlimeActivo = null;
+    let intervaloSonidoSlime = null;
+
+    function sonarPop() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const osc = ctxAudio.createOscillator();
+      const gain = ctxAudio.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(520, ctxAudio.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(260, ctxAudio.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.08, ctxAudio.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctxAudio.currentTime + 0.08);
+      osc.connect(gain);
+      gain.connect(ctxAudio.destination);
+      osc.start();
+      osc.stop(ctxAudio.currentTime + 0.08);
+    }
+
+    function sonarBurbuja() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const ahora = ctxAudio.currentTime;
+      const tonos = [
+        { retraso: 0, inicial: 520, pico: 900, final: 260 },
+        { retraso: 0.045, inicial: 420, pico: 700, final: 220 }
+      ];
+
+      tonos.forEach(tono => {
+        const inicio = ahora + tono.retraso;
+        const osc = ctxAudio.createOscillator();
+        const gain = ctxAudio.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(tono.inicial, inicio);
+        osc.frequency.exponentialRampToValueAtTime(tono.pico, inicio + 0.035);
+        osc.frequency.exponentialRampToValueAtTime(tono.final, inicio + 0.14);
+        gain.gain.setValueAtTime(0.001, inicio);
+        gain.gain.exponentialRampToValueAtTime(0.055, inicio + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.001, inicio + 0.14);
+        osc.connect(gain);
+        gain.connect(ctxAudio.destination);
+        osc.start(inicio);
+        osc.stop(inicio + 0.14);
+      });
+    }
+
+    function sonarLinea4() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const osc = ctxAudio.createOscillator();
+      const gain = ctxAudio.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(360, ctxAudio.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(720, ctxAudio.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.06, ctxAudio.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctxAudio.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(ctxAudio.destination);
+      osc.start();
+      osc.stop(ctxAudio.currentTime + 0.12);
+    }
+
+    function sonarConfeti() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const inicio = ctxAudio.currentTime;
+      const duracion = 0.3;
+      const muestras = Math.floor(ctxAudio.sampleRate * duracion);
+      const buffer = ctxAudio.createBuffer(1, muestras, ctxAudio.sampleRate);
+      const ruidoDatos = buffer.getChannelData(0);
+
+      for (let i = 0; i < muestras; i++) {
+        ruidoDatos[i] = (Math.random() * 2 - 1) * (1 - i / muestras);
+      }
+
+      const ruido = ctxAudio.createBufferSource();
+      const filtroRuido = ctxAudio.createBiquadFilter();
+      const volumenRuido = ctxAudio.createGain();
+      filtroRuido.type = "highpass";
+      filtroRuido.frequency.setValueAtTime(1600, inicio);
+      volumenRuido.gain.setValueAtTime(0.001, inicio);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.12, inicio + 0.01);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+      ruido.buffer = buffer;
+      ruido.connect(filtroRuido);
+      filtroRuido.connect(volumenRuido);
+      volumenRuido.connect(ctxAudio.destination);
+      ruido.start(inicio);
+      ruido.stop(inicio + duracion);
+
+      [784, 988, 1175, 1568, 1318, 1760].forEach((frecuencia, indice) => {
+        const momento = inicio + indice * 0.055;
+        const osc = ctxAudio.createOscillator();
+        const volumen = ctxAudio.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(frecuencia, momento);
+        volumen.gain.setValueAtTime(0.001, momento);
+        volumen.gain.exponentialRampToValueAtTime(0.035, momento + 0.008);
+        volumen.gain.exponentialRampToValueAtTime(0.001, momento + 0.12);
+        osc.connect(volumen);
+        volumen.connect(ctxAudio.destination);
+        osc.start(momento);
+        osc.stop(momento + 0.12);
+      });
+    }
+
+    function sonarOwTriste() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const inicio = ctxAudio.currentTime;
+      const duracion = 0.55;
+      const voz = ctxAudio.createOscillator();
+      const filtro = ctxAudio.createBiquadFilter();
+      const volumen = ctxAudio.createGain();
+      voz.type = "sawtooth";
+      voz.frequency.setValueAtTime(420, inicio);
+      voz.frequency.exponentialRampToValueAtTime(210, inicio + 0.48);
+      filtro.type = "lowpass";
+      filtro.frequency.setValueAtTime(1100, inicio);
+      filtro.frequency.exponentialRampToValueAtTime(520, inicio + 0.48);
+      volumen.gain.setValueAtTime(0.001, inicio);
+      volumen.gain.exponentialRampToValueAtTime(0.075, inicio + 0.035);
+      volumen.gain.setValueAtTime(0.045, inicio + 0.2);
+      volumen.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+      voz.connect(filtro);
+      filtro.connect(volumen);
+      volumen.connect(ctxAudio.destination);
+      voz.start(inicio);
+      voz.stop(inicio + duracion);
+    }
+
+    function sonarMaullido() {
+      if (ctxAudio.state === "suspended") ctxAudio.resume();
+      const inicio = ctxAudio.currentTime;
+      const duracion = 0.72;
+      const voz = ctxAudio.createOscillator();
+      const formanteAbierto = ctxAudio.createBiquadFilter();
+      const formanteCerrado = ctxAudio.createBiquadFilter();
+      const volumenAbierto = ctxAudio.createGain();
+      const volumenCerrado = ctxAudio.createGain();
+      const vibrato = ctxAudio.createOscillator();
+      const profundidadVibrato = ctxAudio.createGain();
+      const envolvente = ctxAudio.createGain();
+
+      voz.type = "sawtooth";
+      voz.frequency.setValueAtTime(460, inicio);
+      voz.frequency.linearRampToValueAtTime(760, inicio + 0.18);
+      voz.frequency.exponentialRampToValueAtTime(330, inicio + 0.65);
+      formanteAbierto.type = "bandpass";
+      formanteAbierto.Q.setValueAtTime(1.2, inicio);
+      formanteAbierto.frequency.setValueAtTime(400, inicio);
+      formanteAbierto.frequency.linearRampToValueAtTime(850, inicio + 0.18);
+      formanteAbierto.frequency.linearRampToValueAtTime(430, inicio + 0.65);
+      formanteCerrado.type = "bandpass";
+      formanteCerrado.Q.setValueAtTime(1.4, inicio);
+      formanteCerrado.frequency.setValueAtTime(2400, inicio);
+      formanteCerrado.frequency.linearRampToValueAtTime(1450, inicio + 0.18);
+      formanteCerrado.frequency.linearRampToValueAtTime(900, inicio + 0.65);
+      volumenAbierto.gain.setValueAtTime(0.7, inicio);
+      volumenCerrado.gain.setValueAtTime(0.35, inicio);
+      vibrato.frequency.setValueAtTime(5.5, inicio);
+      profundidadVibrato.gain.setValueAtTime(14, inicio);
+      vibrato.connect(profundidadVibrato);
+      profundidadVibrato.connect(voz.frequency);
+      envolvente.gain.setValueAtTime(0.001, inicio);
+      envolvente.gain.exponentialRampToValueAtTime(0.08, inicio + 0.05);
+      envolvente.gain.setValueAtTime(0.06, inicio + 0.48);
+      envolvente.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+
+      voz.connect(formanteAbierto);
+      formanteAbierto.connect(volumenAbierto);
+      volumenAbierto.connect(envolvente);
+      voz.connect(formanteCerrado);
+      formanteCerrado.connect(volumenCerrado);
+      volumenCerrado.connect(envolvente);
+      envolvente.connect(ctxAudio.destination);
+      voz.start(inicio);
+      vibrato.start(inicio);
+      voz.stop(inicio + duracion);
+      vibrato.stop(inicio + duracion);
+    }
+
+    function sonarSquishSlime() {
+      const inicio = ctxAudio.currentTime;
+      const duracion = 1.1;
+      const muestras = Math.floor(ctxAudio.sampleRate * duracion);
+      const buffer = ctxAudio.createBuffer(1, muestras, ctxAudio.sampleRate);
+      const ruidoDatos = buffer.getChannelData(0);
+
+      for (let i = 0; i < muestras; i++) {
+        ruidoDatos[i] = Math.random() * 2 - 1;
+      }
+
+      const ruido = ctxAudio.createBufferSource();
+      const filtroLiquido = ctxAudio.createBiquadFilter();
+      const volumenRuido = ctxAudio.createGain();
+      const squish = ctxAudio.createOscillator();
+      const filtroSquish = ctxAudio.createBiquadFilter();
+      const volumenSquish = ctxAudio.createGain();
+
+      filtroLiquido.type = "lowpass";
+      filtroLiquido.frequency.setValueAtTime(1200, inicio);
+      filtroLiquido.frequency.exponentialRampToValueAtTime(520, inicio + 0.35);
+      filtroLiquido.frequency.exponentialRampToValueAtTime(1050, inicio + 0.72);
+      filtroLiquido.frequency.exponentialRampToValueAtTime(480, inicio + duracion);
+      filtroLiquido.Q.setValueAtTime(1.2, inicio);
+      volumenRuido.gain.setValueAtTime(0.001, inicio);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.06, inicio + 0.12);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.018, inicio + 0.36);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.065, inicio + 0.68);
+      volumenRuido.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+
+      ruido.buffer = buffer;
+      ruido.connect(filtroLiquido);
+      filtroLiquido.connect(volumenRuido);
+      volumenRuido.connect(salidaSonidoSlime);
+
+      squish.type = "triangle";
+      squish.frequency.setValueAtTime(160, inicio);
+      squish.frequency.exponentialRampToValueAtTime(270, inicio + 0.22);
+      squish.frequency.exponentialRampToValueAtTime(125, inicio + 0.58);
+      squish.frequency.exponentialRampToValueAtTime(205, inicio + 0.82);
+      squish.frequency.exponentialRampToValueAtTime(110, inicio + duracion);
+      filtroSquish.type = "lowpass";
+      filtroSquish.frequency.setValueAtTime(620, inicio);
+      filtroSquish.Q.setValueAtTime(1.8, inicio);
+      volumenSquish.gain.setValueAtTime(0.001, inicio);
+      volumenSquish.gain.exponentialRampToValueAtTime(0.045, inicio + 0.1);
+      volumenSquish.gain.exponentialRampToValueAtTime(0.001, inicio + duracion);
+      squish.connect(filtroSquish);
+      filtroSquish.connect(volumenSquish);
+      volumenSquish.connect(salidaSonidoSlime);
+
+      ruido.start(inicio);
+      ruido.stop(inicio + duracion);
+      squish.start(inicio);
+      squish.stop(inicio + duracion);
+    }
+
+    function congelarVideoSlime(video) {
+      if (videoSlimeActivo === video) return;
+      if (!video.complete || video.naturalWidth === 0) {
+        video.addEventListener("load", () => congelarVideoSlime(video), { once: true });
+        return;
+      }
+
+      const fotograma = document.createElement("canvas");
+      fotograma.width = video.naturalWidth;
+      fotograma.height = video.naturalHeight;
+      const contexto = fotograma.getContext("2d");
+      if (!contexto) {
+        console.error("No se pudo congelar el fotograma de slime.");
+        return;
+      }
+
+      contexto.drawImage(video, 0, 0);
+      video.src = fotograma.toDataURL("image/png");
+    }
+
+    async function reproducirVideoSlime(video) {
+      if (videoSlimeActivo === video) return;
+      if (videoSlimeActivo) pausarVideoSlime(videoSlimeActivo);
+      videoSlimeActivo = video;
+      video.src = fuentesGifSlime.get(video);
+
+      try {
+        if (video === videosSlimeEls[0]) {
+          await audioCrunchySlime.play();
+          if (videoSlimeActivo !== video) {
+            audioCrunchySlime.pause();
+            audioCrunchySlime.currentTime = 0;
+          }
+          return;
+        }
+
+        await ctxAudio.resume();
+        if (videoSlimeActivo !== video) return;
+        const ahora = ctxAudio.currentTime;
+        salidaSonidoSlime.gain.cancelScheduledValues(ahora);
+        salidaSonidoSlime.gain.setTargetAtTime(3, ahora, 0.025);
+        sonarSquishSlime();
+        intervaloSonidoSlime = setInterval(sonarSquishSlime, 1300);
+      } catch (error) {
+        console.error("No se pudo reproducir el sonido del slime:", error);
+      }
+    }
+
+    function pausarVideoSlime(video) {
+      if (videoSlimeActivo !== video) return;
+      videoSlimeActivo = null;
+      if (intervaloSonidoSlime !== null) {
+        clearInterval(intervaloSonidoSlime);
+        intervaloSonidoSlime = null;
+      }
+      if (video === videosSlimeEls[0]) {
+        audioCrunchySlime.pause();
+        audioCrunchySlime.currentTime = 0;
+      } else {
+        const ahora = ctxAudio.currentTime;
+        salidaSonidoSlime.gain.cancelScheduledValues(ahora);
+        salidaSonidoSlime.gain.setTargetAtTime(0, ahora, 0.025);
+      }
+      congelarVideoSlime(video);
+    }
+
+    videosSlimeEls.forEach(video => {
+      video.addEventListener("mouseenter", () => reproducirVideoSlime(video));
+      video.addEventListener("mouseleave", () => pausarVideoSlime(video));
+      congelarVideoSlime(video);
+    });
+
+    function crearBurbujas() {
+      burbujasEl.innerHTML = "";
+      for (let i = 0; i < 18; i++) {
+        const b = document.createElement("div");
+        b.className = "burbuja";
+        b.onmouseenter = () => {
+          if (b.classList.contains("explotada")) return;
+          b.classList.add("explotada");
+          sonarBurbuja();
+        };
+        burbujasEl.appendChild(b);
+      }
+    }
+
+    // --- DATOS DE GATOS ---
+    const datos = [
+      "Los gatos pasan cerca del 70% de su vida durmiendo.",
+      "El ronroneo suele ocurrir en frecuencias calmantes de unos 25 a 150 Hz.",
+      "Cada huella de la nariz de un gato tiene un patron unico, como una huella digital.",
+      "Los bigotes ayudan a los gatos a medir espacios y detectar movimientos cercanos.",
+      "Los gatos necesitan taurina, un aminoacido esencial para la salud de su corazon y sus ojos.",
+      "Al rascar, los gatos desprenden la capa externa vieja de sus garras y dejan al descubierto la nueva.",
+      "La mayoria de los gatos se limpia sola y casi nunca necesita un lavado con agua.",
+      "Los gatos rascan para estirarse, marcar su territorio y jugar.",
+      "El agua fresca y limpia debe estar disponible para los gatos todo el tiempo.",
+      "Durante sus primeras semanas, un gatito puede duplicar o triplicar su peso.",
+      "Durante sus primeras cuatro semanas, la leche de su madre aporta al gatito toda la nutricion que necesita."
+    ];
+    const datoEl = document.getElementById("dato-gato");
+    function mostrarDato() {
+      datoEl.textContent = datos[Math.floor(Math.random() * datos.length)];
+    }
+
+    function actualizarMarcadores() {
+      document.getElementById("score-gato-tu").textContent = scoreGato.tu;
+      document.getElementById("score-gato-empate").textContent = scoreGato.empate;
+      document.getElementById("score-gato-pc").textContent = scoreGato.pc;
+      document.getElementById("score-4-tu").textContent = score4.tu;
+      document.getElementById("score-4-empate").textContent = score4.empate;
+      document.getElementById("score-4-pc").textContent = score4.pc;
+    }
+
+    document.getElementById("btn-nueva-gato").onclick = nuevaGato;
+    document.getElementById("btn-nueva-4").onclick = nueva4;
+    document.getElementById("btn-inflar").onclick = crearBurbujas;
+    document.getElementById("btn-dato").onclick = mostrarDato;
+    document.getElementById("btn-reiniciar-todo").onclick = () => {
+      scoreGato = { tu: 0, pc: 0, empate: 0 };
+      score4 = { tu: 0, pc: 0, empate: 0 };
+      actualizarMarcadores();
+      nuevaGato();
+      nueva4();
+    };
+
+    // --- PLAYLIST LATERAL (SOLO TEXTO + CORAZON DE AVANCE) ---
+    const cancionesKawaii = [
+      { titulo: "Le ciel ~ Kuuhaku no Kanata e ~/MALICE MIZER [Music Box]", artista: "R3 Music Box", archivo: "cancion1.mp3" },
+      { titulo: "ma cherie ~ Itoshii Kimi e ~/MALICE MIZER [Music Box]", artista: "R3 Music Box", archivo: "cancion2.mp3" },
+      { titulo: "au revoir/MALICE MIZER [Music Box]", artista: "R3 Music Box", archivo: "cancion3.mp3" },
+      { titulo: "Gekka no Yasoukyoku/MALICE MIZER [Music Box]", artista: "R3 Music Box", archivo: "cancion4.mp3" },
+      { titulo: "Gardenia/MALICE MIZER [Music Box]", artista: "R3 Music Box", archivo: "cancion5.mp3" }
+    ];
+
+    let pistaActual = 0;
+    const audioPlaylist = new Audio(cancionesKawaii[0].archivo);
+    audioPlaylist.volume = 0.45;
+
+    const listaCancionesEl = document.getElementById("lista-canciones");
+    const tituloCancionEl = document.getElementById("titulo-cancion-actual");
+    tituloCancionEl.title = cancionesKawaii[pistaActual].titulo;
+    const btnPrevPista = document.getElementById("btn-prev-pista");
+    const btnPlayPausa = document.getElementById("btn-play-pausa");
+    const btnSigPista = document.getElementById("btn-sig-pista");
+    const btnLoopPlaylist = document.getElementById("btn-loop-playlist");
+    const barraProgresoEl = document.getElementById("barra-progreso");
+    const rellenoProgresoEl = document.getElementById("relleno-progreso");
+    const corazonProgresoEl = document.getElementById("corazon-progreso");
+    const tiempoActualEl = document.getElementById("tiempo-actual");
+    const tiempoTotalEl = document.getElementById("tiempo-total");
+    let loopPlaylist = btnLoopPlaylist.classList.contains("activa");
+    btnLoopPlaylist.setAttribute("aria-pressed", loopPlaylist);
+
+    function formatearTiempo(seg) {
+      if (!Number.isFinite(seg) || seg < 0) return "0:00";
+      const min = Math.floor(seg / 60);
+      const s = Math.floor(seg % 60);
+      return min + ":" + (s < 10 ? "0" : "") + s;
+    }
+
+    function actualizarBarraCorazon() {
+      const dur = audioPlaylist.duration;
+      const act = audioPlaylist.currentTime;
+      if (Number.isFinite(dur) && dur > 0) {
+        const pct = Math.min(100, Math.max(0, (act / dur) * 100));
+        rellenoProgresoEl.style.width = pct + "%";
+        corazonProgresoEl.style.left = pct + "%";
+        tiempoActualEl.textContent = formatearTiempo(act);
+        tiempoTotalEl.textContent = formatearTiempo(dur);
+      } else {
+        rellenoProgresoEl.style.width = "0%";
+        corazonProgresoEl.style.left = "0%";
+        tiempoActualEl.textContent = "0:00";
+        tiempoTotalEl.textContent = "0:00";
+      }
+    }
+
+    function pintarPlaylist() {
+      listaCancionesEl.innerHTML = "";
+      cancionesKawaii.forEach((pista, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "item-cancion" + (idx === pistaActual ? " activa" : "");
+        btn.textContent = (idx + 1) + ". " + pista.titulo + " - " + pista.artista;
+        btn.title = btn.textContent;
+        btn.onclick = () => reproducirPista(idx);
+        listaCancionesEl.appendChild(btn);
+      });
+    }
+
+    function mostrarErrorPista(error) {
+      tituloCancionEl.textContent = "No se pudo reproducir esta pista.";
+      btnPlayPausa.textContent = ">";
+      console.error("Error al reproducir la pista:", error);
+    }
+
+    function reproducirPista(idx) {
+      pistaActual = (idx + cancionesKawaii.length) % cancionesKawaii.length;
+      audioPlaylist.src = cancionesKawaii[pistaActual].archivo;
+      audioPlaylist.currentTime = 0;
+      actualizarBarraCorazon();
+      audioPlaylist.play().catch(mostrarErrorPista);
+      tituloCancionEl.textContent = cancionesKawaii[pistaActual].titulo;
+      tituloCancionEl.title = cancionesKawaii[pistaActual].titulo;
+      btnPlayPausa.textContent = "II";
+      pintarPlaylist();
+    }
+
+    btnPrevPista.onclick = () => reproducirPista(pistaActual - 1);
+    btnLoopPlaylist.onclick = () => {
+      loopPlaylist = !loopPlaylist;
+      btnLoopPlaylist.classList.toggle("activa", loopPlaylist);
+      btnLoopPlaylist.setAttribute("aria-pressed", loopPlaylist);
+    };
+
+    btnPlayPausa.onclick = () => {
+      if (audioPlaylist.paused) {
+        audioPlaylist.play().catch(mostrarErrorPista);
+        tituloCancionEl.textContent = cancionesKawaii[pistaActual].titulo;
+        btnPlayPausa.textContent = "II";
+      } else {
+        audioPlaylist.pause();
+        btnPlayPausa.textContent = ">";
+      }
+    };
+
+    btnSigPista.onclick = () => reproducirPista(pistaActual + 1);
+
+    audioPlaylist.addEventListener("timeupdate", actualizarBarraCorazon);
+    audioPlaylist.addEventListener("loadedmetadata", actualizarBarraCorazon);
+    audioPlaylist.onended = () => {
+      if (pistaActual < cancionesKawaii.length - 1) {
+        reproducirPista(pistaActual + 1);
+      } else if (loopPlaylist) {
+        reproducirPista(0);
+      } else {
+        btnPlayPausa.textContent = ">";
+      }
+    };
+
+    barraProgresoEl.onclick = (e) => {
+      if (!Number.isFinite(audioPlaylist.duration) || audioPlaylist.duration <= 0) return;
+      const rect = barraProgresoEl.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+      audioPlaylist.currentTime = ratio * audioPlaylist.duration;
+      actualizarBarraCorazon();
+    };
+
+    pintarPlaylist();
+    renderGato();
+    render4();
+    crearBurbujas();
+    mostrarDato();
+  </script>
+</body>
+</html>
