@@ -1,0 +1,173 @@
+# Ejercicio 1
+numero = 28
+es_par = numero % 2 == 0
+print(es_par)
+
+numero = 21
+es_par = numero % 2 == 0
+print(es_par)
+
+# Ejercicio 2
+cuadernos = "4"
+plumas = "9"
+
+print(cuadernos + plumas)
+print(int(cuadernos) + int(plumas))
+# Al sumar texto con +, se concatenan los caracteres ("49"); al convertir con int(), se realiza una suma numérica (13).
+
+bocinas = "42"
+tabletas = "18"
+
+print(bocinas + tabletas)
+print(int(bocinas) + int(tabletas))
+# Con + como texto se juntan ("4218"), mientras que con int() se suman sus valores numéricos (60).
+
+# Ejercicio 3
+nombre = "Sarah"
+edad = 19
+estatura = 1.61
+es_estudiante = True
+resumen = nombre + " tiene " + str(edad) + " años."
+
+print("Nombre:", nombre, type(nombre))
+print("Edad:", edad, type(edad))
+print("Estatura:", estatura, type(estatura))
+print("¿Es estudiante?:", es_estudiante, type(es_estudiante))
+print("Resumen:", resumen, type(resumen))
+
+nombre = "Kali Uchis"
+edad = 32
+estatura = 1.68
+es_estudiante = False
+resumen = nombre + " tiene " + str(edad) + " años."
+
+print("Nombre:", nombre, type(nombre))
+print("Edad:", edad, type(edad))
+print("Estatura:", estatura, type(estatura))
+print("¿Es estudiante?:", es_estudiante, type(es_estudiante))
+print("Resumen:", resumen, type(resumen))
+
+# Ejercicio 4
+a = 52
+b = 19
+
+print("Suma:", a + b)
+print("Resta:", a - b)
+print("Multiplicacion:", a * b)
+print("Division:", a / b)
+
+a = 4320
+b = 1280
+
+print("Suma:", a + b)
+print("Resta:", a - b)
+print("Multiplicacion:", a * b)
+print("Division:", a / b)
+
+a = 845
+b = 215
+
+print("Suma:", a + b)
+print("Resta:", a - b)
+print("Multiplicacion:", a * b)
+print("Division:", a / b)
+
+# Ejercicio 5
+# / realiza la división exacta (con decimales) y // (división entera) descarta los decimales
+a = 845
+b = 215
+
+print(a / b)
+print(a // b)
+print(a % b)
+
+a = 95
+b = 24
+
+print(a / b)
+print(a // b)
+print(a % b)
+
+# Ejercicio 6
+item1 = 120
+item2 = 85
+
+mayor = item1 > item2
+menor = item1 < item2
+igual = item1 == item2
+diferente = item1 != item2
+
+print("Probando con números distintos (120 y 85)")
+print("¿Es mayor?", mayor)
+print("¿Es menor?", menor)
+print("¿Son iguales?", igual)
+print("¿Son diferentes?", diferente)
+
+item1 = 64
+item2 = 64
+
+mayor = item1 > item2
+menor = item1 < item2
+igual = item1 == item2
+diferente = item1 != item2
+
+print("Probando con números iguales (64 y 64)")
+print("¿Es mayor?", mayor)
+print("¿Es menor?", menor)
+print("¿Son iguales?", igual)
+print("¿Son diferentes?", diferente)
+
+# Ejercicio 7
+a = 12
+b = 50
+
+resultado_and = (a < 20) and (b > 30)
+resultado_or = (a > 100) or (b > 40)
+resultado_not = not (a == b)
+
+print("Resultado con and:", resultado_and)
+print("Resultado con or:", resultado_or)
+print("Resultado con not:", resultado_not)
+
+a = 310
+b = 15
+
+resultado_and = (a < 50) and (b > 10)
+resultado_or = (a > 250) or (b > 200)
+resultado_not = not (a == b)
+
+print("Resultado con and:", resultado_and)
+print("Resultado con or:", resultado_or)
+print("Resultado con not:", resultado_not)
+
+# Ejercicio 8
+matematicas = 92
+quimica = 84
+biologia = 88
+
+promedio = (matematicas + quimica + biologia) / 3
+aprobado = promedio >= 6
+
+print("Tu promedio es:", promedio)
+print("Condicion:", aprobado)
+
+matematicas = 5
+quimica = 4
+biologia = 6
+
+promedio = (matematicas + quimica + biologia) / 3
+aprobado = promedio >= 6
+
+print("Tu promedio es:", promedio)
+print("Condicion:", aprobado)
+
+# Ejercicio 9
+edad = 24
+nacionalidad = "mexicana"
+es_elegible = (edad > 17) and (nacionalidad == "mexicana")
+print(es_elegible)
+
+edad = 16
+nacionalidad = "colombiana"
+es_elegible = (edad > 17) and (nacionalidad == "mexicana")
+print(es_elegible)
