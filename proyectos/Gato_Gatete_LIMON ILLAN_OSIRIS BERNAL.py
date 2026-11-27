@@ -1,5 +1,5 @@
 # [Nombre del juego]: Gato Gatete
-# [Nombres de los integrantes]: Sarah Lim0n, Lizbeth Osiris
+# [Nombres de los integrantes]: Sarah Lim0n, Lizbeth Osiris Lizbeth
 # [Fecha]: 23/11/2026
 
 import random
@@ -71,19 +71,6 @@ def crear_laberinto(dificultad):
     return laberinto
 
 
-def contar_elementos_laberinto(laberinto):
-    """Recorre la matriz con ciclos anidados y cuenta trampas y premios."""
-    trampas = 0
-    premios = 0
-    for fila in laberinto:
-        for celda in fila:
-            if celda == "T":
-                trampas += 1
-            elif celda == "P":
-                premios += 1
-    return trampas, premios
-
-
 def mostrar_laberinto(laberinto, fila_jugador, columna_jugador, inicial):
     """Muestra la matriz con ciclos anidados."""
     print("\nLeyenda:", inicial + "=tu gato,", ".=camino,", "#=pared")
@@ -150,19 +137,9 @@ def jugar_laberinto(nombre, dificultad, puntos):
     print("T resta una vida. P suma 5 puntos.")
 
     while vidas > 0 and pasos < limite_pasos:
-        trampas_restantes, premios_restantes = contar_elementos_laberinto(laberinto)
         mostrar_laberinto(laberinto, fila, columna, inicial)
         print("Vidas:", vidas, "| Pasos:", pasos, "/", limite_pasos)
-        print(
-            "Premios:",
-            premios,
-            "| Premios en mapa:",
-            premios_restantes,
-            "| Trampas en mapa:",
-            trampas_restantes,
-            "| Puntos:",
-            puntos,
-        )
+        print("Premios:", premios, "| Puntos:", puntos)
         direccion = leer_opcion("Movimiento (W/A/S/D): ", ("w", "a", "s", "d"))
 
         fila_nueva, columna_nueva, pudo_mover = mover_gato(
@@ -262,16 +239,14 @@ def jugar_trivia(nombre, dificultad, puntos):
     vidas = vidas_por_dificultad[dificultad]
     preguntas = crear_preguntas(dificultad)
     aciertos = 0
-    aciertos_minimos = 3
 
     print("\n===== TRIVIA GATUNA =====")
     print("Responde con 1, 2 o 3.")
-    print("Consigue al menos", aciertos_minimos, "aciertos y no pierdas todas tus vidas.")
+    print("Completa las 5 preguntas y no pierdas todas tus vidas.")
 
-    for numero, (pregunta, opciones, respuesta_correcta, texto_correcto) in enumerate(
-        preguntas, start=1
-    ):
-        print("\nPregunta", numero, "de", len(preguntas))
+    for numero in range(len(preguntas)):
+        pregunta, opciones, respuesta_correcta, texto_correcto = preguntas[numero]
+        print("\nPregunta", numero + 1, "de", len(preguntas))
         print(pregunta)
         print(opciones)
         print("Vidas:", vidas, "| Puntos:", puntos)
@@ -287,12 +262,12 @@ def jugar_trivia(nombre, dificultad, puntos):
             if vidas <= 0:
                 break
 
-    if aciertos >= aciertos_minimos and vidas > 0:
+    if aciertos == len(preguntas) and vidas > 0:
         puntos += 30
         print("\n¡Ganaste la trivia!")
-        print("Aciertos:", aciertos, "de", len(preguntas), "| Bonus: +30 puntos.")
+        print("Bonus: +30 puntos.")
     else:
-        print("\nNooo! Perdiste la trivia.")
+        print("\nPerdiste la trivia.")
         print("Aciertos:", aciertos, "de", len(preguntas))
 
     print("Puntos:", puntos)
@@ -370,7 +345,6 @@ def elegir_movimiento_pc(tablero, dificultad):
                     tablero[indice] = ""
                     return indice
                 tablero[indice] = ""
-        return random.choice(libres)
 
     mejor_indice = libres[0]
     mejor_puntuacion = -999
