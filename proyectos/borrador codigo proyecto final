@@ -881,85 +881,9 @@
       fin4 = false;
       estado4El.textContent = "Turno del jugador (1)";
       render4();
-    }
+  
 
-    // --- BURBUJAS ---
-    const burbujasEl = document.getElementById("burbujas");
-    const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-    const videosSlimeEls = Array.from(document.querySelectorAll(".video-slime"));
-    const fuentesGifSlime = new Map(videosSlimeEls.map(video => [video, video.getAttribute("src")]));
-    const salidaSonidoSlime = ctxAudio.createGain();
-    salidaSonidoSlime.gain.value = 0;
-    salidaSonidoSlime.connect(ctxAudio.destination);
-    const audioCrunchySlime = new Audio("sonidocrunchy.mp3");
-    audioCrunchySlime.loop = true;
-    let videoSlimeActivo = null;
-    let intervaloSonidoSlime = null;
-
-    function sonarPop() {
-      if (ctxAudio.state === "suspended") ctxAudio.resume();
-      const osc = ctxAudio.createOscillator();
-      const gain = ctxAudio.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(520, ctxAudio.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(260, ctxAudio.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.08, ctxAudio.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctxAudio.currentTime + 0.08);
-      osc.connect(gain);
-      gain.connect(ctxAudio.destination);
-      osc.start();
-      osc.stop(ctxAudio.currentTime + 0.08);
-    }
-
-    function sonarBurbuja() {
-      if (ctxAudio.state === "suspended") ctxAudio.resume();
-      const ahora = ctxAudio.currentTime;
-      const tonos = [
-        { retraso: 0, inicial: 520, pico: 900, final: 260 },
-        { retraso: 0.045, inicial: 420, pico: 700, final: 220 }
-      ];
-
-      tonos.forEach(tono => {
-        const inicio = ahora + tono.retraso;
-        const osc = ctxAudio.createOscillator();
-        const gain = ctxAudio.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(tono.inicial, inicio);
-        osc.frequency.exponentialRampToValueAtTime(tono.pico, inicio + 0.035);
-        osc.frequency.exponentialRampToValueAtTime(tono.final, inicio + 0.14);
-        gain.gain.setValueAtTime(0.001, inicio);
-        gain.gain.exponentialRampToValueAtTime(0.055, inicio + 0.008);
-        gain.gain.exponentialRampToValueAtTime(0.001, inicio + 0.14);
-        osc.connect(gain);
-        gain.connect(ctxAudio.destination);
-        osc.start(inicio);
-        osc.stop(inicio + 0.14);
-      });
-    }
-
-    function sonarLinea4() {
-      if (ctxAudio.state === "suspended") ctxAudio.resume();
-      const osc = ctxAudio.createOscillator();
-      const gain = ctxAudio.createGain();
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(360, ctxAudio.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(720, ctxAudio.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.06, ctxAudio.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctxAudio.currentTime + 0.12);
-      osc.connect(gain);
-      gain.connect(ctxAudio.destination);
-      osc.start();
-      osc.stop(ctxAudio.currentTime + 0.12);
-    }
-
-    function sonarConfeti() {
-      if (ctxAudio.state === "suspended") ctxAudio.resume();
-      const inicio = ctxAudio.currentTime;
-      const duracion = 0.3;
-      const muestras = Math.floor(ctxAudio.sampleRate * duracion);
-      const buffer = ctxAudio.createBuffer(1, muestras, ctxAudio.sampleRate);
-      const ruidoDatos = buffer.getChannelData(0);
-
+  
       for (let i = 0; i < muestras; i++) {
         ruidoDatos[i] = (Math.random() * 2 - 1) * (1 - i / muestras);
       }
