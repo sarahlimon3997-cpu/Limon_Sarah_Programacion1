@@ -481,25 +481,6 @@
         <button id="btn-sig-pista" title="Siguiente cancion">&gt;|</button>
         <button id="btn-loop-playlist" class="activa" title="Repetir playlist en loop">Loop</button>
       </div>
-
-      <div class="reproductor-barra">
-        <div class="pista-rastro" id="barra-progreso" title="Adelantar o retroceder">
-          <div class="pista-relleno" id="relleno-progreso"></div>
-          <div class="corazon-avance" id="corazon-progreso" aria-hidden="true">
-            <svg viewBox="0 0 24 22">
-              <path d="M12 20.5C12 20.5 2.5 14.2 2.5 7.4C2.5 4.4 4.8 2.2 7.6 2.2C9.4 2.2 11 3.1 12 4.5C13 3.1 14.6 2.2 16.4 2.2C19.2 2.2 21.5 4.4 21.5 7.4C21.5 14.2 12 20.5 12 20.5Z" />
-            </svg>
-          </div>
-        </div>
-        <div class="tiempos-pista">
-          <span id="tiempo-actual">0:00</span>
-          <span id="tiempo-total">0:00</span>
-        </div>
-      </div>
-
-      <div class="lista-canciones" id="lista-canciones"></div>
-    </aside>
-
     <section class="tarjeta">
       <h2>Gato (Tic-Tac-Toe)</h2>
       <div class="marcador">
@@ -528,19 +509,6 @@
       </div>
     </section>
 
-    <section class="tarjeta seccion-slime">
-      <h2>Slime</h2>
-      <div class="fila-slime">
-        <img src="videoslime.gif" alt="Animacion de slime" title="Pasa el cursor para reproducir" class="item-slime video-slime" />
-        <img src="videoslime2.gif" alt="Animacion de slime 2" title="Pasa el cursor para reproducir" class="item-slime video-slime" />
-      </div>
-      <h2>Burbujas</h2>
-      <div class="burbujas" id="burbujas"></div>
-      <div class="controles" style="margin-top: 14px;">
-        <button id="btn-inflar">Inflar burbujas</button>
-      </div>
-    </section>
-
     <section class="tarjeta">
       <h2>Datos curiosos de gatos</h2>
       <div class="dato-caja" id="dato-gato"></div>
@@ -548,16 +516,6 @@
         <button id="btn-dato">Otro dato gatuno</button>
       </div>
     </section>
-
-    <footer class="cierre-final">
-      <img src="moñofinal.gif" alt="Mono final" />
-      <p>hecho por Sarah Lim0n</p>
-    </footer>
-  </div>
-
-  <img src="gato.gif" alt="Gatito rodando" class="gato-esquina" />
-  <img src="gatoblanco.gif" alt="Gato blanco" class="gato-blanco-esquina" />
-  <img src="niñagato.gif" alt="Gatita decorativa" class="gata-esquina" />
 
   <script>
     const dificultadEl = document.getElementById("dificultad");
